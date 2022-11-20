@@ -14,7 +14,7 @@ public class Game {
     private static Random random = new Random();
     public static final int FLOOR_HEIGHT = Window.HEIGHT - 45;
 
-    private final Image healthSprite = new Image("squelette.png");
+    private final Image healthSprite = ImageHelpers.colorize(new Image("squelette.png"), new Color(1, .4, .7, 1));
 
     private double deltaTimeLevelText = 0;
     private double deltaTimeMonster = 0;

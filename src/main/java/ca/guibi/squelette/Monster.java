@@ -7,10 +7,10 @@ import javafx.scene.image.Image;
 public class Monster extends GameObject {
     private final int ACCELERATION_GRAVITY = 100;
 
-    private static Random random = new Random();
+    protected static Random random = new Random();
 
     private final double radius;
-    private boolean isGoingRight;
+    protected boolean isGoingRight;
 
     public Monster(int level) {
         isGoingRight = random.nextBoolean();

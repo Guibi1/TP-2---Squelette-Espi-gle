@@ -97,12 +97,15 @@ public class Window extends Application {
 
             @Override
             public void handle(long now) {
-                game.update((now - lastTime) * 1e-9);
-                lastTime = now;
+                if (!game.update((now - lastTime) * 1e-9)) {
+                    showMenu();
+                }
 
                 // Draw
                 canvas.getGraphicsContext2D().clearRect(0, 0, WIDTH, HEIGHT);
                 game.draw(canvas.getGraphicsContext2D());
+
+                lastTime = now;
             }
         };
 

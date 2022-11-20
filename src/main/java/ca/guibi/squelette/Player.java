@@ -54,6 +54,10 @@ public class Player extends GameObject {
         }
     }
 
+    public void kill() {
+        health = 0;
+    }
+
     public int getHealth() {
         return health;
     }

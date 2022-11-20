@@ -70,14 +70,13 @@ public class Game {
         return t.getBoundsInLocal().getWidth();
     }
 
-    public void update(double deltaTime) {
+    public boolean update(double deltaTime) {
+        deltaTimeLevelText += deltaTime;
         if (player.isDead()) {
-            return;
+            return deltaTimeLevelText < 3;
         }
 
-        deltaTimeLevelText += deltaTime;
         deltaTimeMonster += deltaTime;
-
         if (deltaTimeMonster >= 3) {
             deltaTimeMonster -= 3;
             createMonster();
@@ -105,6 +104,10 @@ public class Game {
             monsters.get(i).update(deltaTime);
             if (monsters.get(i).isDead()) {
                 player.loseHealth();
+                if (player.isDead()) {
+                    deltaTimeLevelText = 0;
+                }
+
                 monsters.remove(i);
                 i--;
             }
@@ -123,6 +126,8 @@ public class Game {
                 }
             }
         }
+
+        return true;
     }
 
     public void draw(GraphicsContext context) {
@@ -141,7 +146,7 @@ public class Game {
 
         if (player.isDead()) {
             context.setFill(Color.RED);
-            context.setFont(new Font("Arial", 30));
+            context.setFont(new Font("Arial", 60));
             context.fillText("FIN DE PARTIE", (Window.WIDTH - getTextWidth("FIN DE PARTIE", context.getFont())) / 2,
                     200);
         } else if (deltaTimeLevelText < 3) {
@@ -184,10 +189,9 @@ public class Game {
                 break;
             case K:
                 player.addHealth();
-                ;
                 break;
             case L:
-
+                player.kill();
             default:
                 break;
         }

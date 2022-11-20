@@ -1,16 +1,27 @@
-public class Eye extends Monster {
-    public Eye() {
-        super();
+package ca.guibi.squelette;
 
+import javafx.scene.image.Image;
+
+public class Eye extends Monster {
+    private double time;
+
+    public Eye(int level) {
+        super(level);
+
+        vx = 1.3 * vx;
+        vy = 0;
         sprite = new Image("oeil.png");
+        time = random.nextDouble(0, 10);
     }
 
     @Override
     public void update(double deltaTime) {
-        vy += ACCELERATION_GRAVITY * deltaTime;
+        time += deltaTime;
 
-        // Position
-        x += deltaTime * vx;
-        y += deltaTime * vy;
+        if (time % .75 < .5) {
+            x += deltaTime * vx;
+        } else {
+            x -= deltaTime * vx;
+        }
     }
 }

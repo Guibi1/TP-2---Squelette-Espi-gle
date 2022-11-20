@@ -1,0 +1,28 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+}
+
+javafx {
+    version = "19"
+    modules = [ 'javafx.controls' ]
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+
+application {
+    // Define the main class for the application.
+    mainClass = 'ca.guibi.squelette.Main'
+}
+
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

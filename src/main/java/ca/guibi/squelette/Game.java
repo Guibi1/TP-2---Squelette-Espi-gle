@@ -1,6 +1,7 @@
 package ca.guibi.squelette;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -10,10 +11,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Game {
+    private static Random random = new Random();
     public static final int FLOOR_HEIGHT = Window.HEIGHT - 45;
 
     private final Image healthSprite = new Image("squelette.png");
 
+    private double deltaTimeLevelText = 0;
     private double deltaTimeMonster = 0;
     private double deltaTimeSpecialMonster = 0;
     private double lastTimeMagic = 0;
@@ -31,11 +34,17 @@ public class Game {
     }
 
     private void createMonster(boolean special) {
-        if (special) {
-            System.out.println("special");
+        Monster monster;
+
+        if (!special) {
+            monster = new Monster(level);
+        } else if (random.nextBoolean()) {
+            monster = new Eye(level);
         } else {
-            monsters.add(new Monster(level));
+            monster = new Mouth(level);
         }
+
+        monsters.add(monster);
     }
 
     private void createMagic() {
@@ -45,11 +54,24 @@ public class Game {
         }
     }
 
+    private void levelUp() {
+        level += 1;
+        deltaTimeLevelText = 0;
+    }
+
     private boolean collision(GameObject o1, double r1, GameObject o2, double r2) {
         return Math.sqrt(Math.pow((o2.x + r2) - (o1.x + r1), 2) + Math.pow((o2.y + r2) - (o1.y + r1), 2)) <= r1 + r2;
     }
 
+    private double getTextWidth(String text, Font font) {
+        Text t = new Text(text);
+        t.setFont(font);
+        return t.getBoundsInLocal().getWidth();
+    }
+
     public void update(double deltaTime) {
+        deltaTimeLevelText += deltaTime;
+
         deltaTimeMonster += deltaTime;
         if (deltaTimeMonster >= 3) {
             deltaTimeMonster -= 3;
@@ -87,6 +109,10 @@ public class Game {
             for (int j = 0; j < monsters.size(); j++) {
                 if (collision(monsters.get(j), monsters.get(j).getRadius(), magics.get(i), magics.get(i).getRadius())) {
                     score += 1;
+                    if (score % 5 == 0) {
+                        levelUp();
+                    }
+
                     monsters.remove(j);
                     j--;
                 }
@@ -97,10 +123,8 @@ public class Game {
     public void draw(GraphicsContext context) {
         context.setFill(Color.WHITE);
         context.setFont(new Font("Arial", 30));
-        Text text = new Text(String.valueOf(score));
-        text.setFont(context.getFont());
-        context.getFont();
-        context.fillText(String.valueOf(score), (Window.WIDTH - text.getBoundsInLocal().getWidth()) / 2, 50, 100);
+        context.fillText(String.valueOf(score),
+                (Window.WIDTH - getTextWidth(String.valueOf(score), context.getFont())) / 2, 50);
 
         double healthSize = 30;
         double offset = Window.WIDTH / 2 - health * (healthSize / 2);
@@ -108,6 +132,12 @@ public class Game {
             context.drawImage(healthSprite, 0, 0, healthSprite.getWidth(), healthSprite.getHeight(),
                     offset + i * healthSize,
                     80, healthSize, healthSize);
+        }
+
+        if (deltaTimeLevelText < 3) {
+            context.setFont(new Font("Arial", 30));
+            context.fillText("Niveau " + level, (Window.WIDTH - getTextWidth("Niveau " + level, context.getFont())) / 2,
+                    200);
         }
 
         player.draw(context);
@@ -132,7 +162,7 @@ public class Game {
                 player.keyPressed(event.getCode());
                 break;
             case H:
-                level += 1;
+                levelUp();
                 break;
             case J:
                 score += 1;

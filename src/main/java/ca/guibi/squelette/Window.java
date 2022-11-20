@@ -18,9 +18,12 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Window extends Application {
@@ -109,6 +112,7 @@ public class Window extends Application {
 
     void showCredits() {
         VBox root = new VBox();
+        root.setAlignment(Pos.CENTER);
         Scene scene = new Scene(root);
         scene.setOnKeyPressed((event) -> {
             if (event.getCode() == KeyCode.ESCAPE) {
@@ -116,6 +120,43 @@ public class Window extends Application {
             }
         });
 
+        int padding = 72;
+        root.setPadding(new Insets(padding));
+        root.setSpacing(24);
+
+        Text title = new Text("Squelette Espiègle");
+        title.setFont(new Font(48));
+
+        HBox person1Box = new HBox();
+        person1Box.setAlignment(Pos.CENTER);
+        Text person1Text = new Text("Par");
+        person1Text.setFont(new Font(24));
+        Text person1 = new Text("Stéphenne Laurent");
+        person1.setFont(new Font(32));
+        person1.setFill(ImageHelpers.couleurAuHasard());
+        person1Box.setSpacing(24);
+        person1Box.getChildren().addAll(person1Text, person1);
+        
+        HBox person2Box = new HBox();
+        person2Box.setAlignment(Pos.CENTER);
+        Text person2Text = new Text("et");
+        person2Text.setFont(new Font(24));
+        Text person2 = new Text("Cédric Bélanger-St-Pierre");
+        person2.setFont(new Font(32));
+        person2.setFill(ImageHelpers.couleurAuHasard());
+        person2Box.setSpacing(24);
+        person2Box.getChildren().addAll(person2Text, person2);
+
+        Text information = new Text("Travail remis à Nicolas Hurtubise. Graphismes adaptés de https://game-icons.net/. Développé dans le cadre du cours 420-203-RE. Développement de programmes dans un environnement graphique, au Collège de Bois-de-Boulogne");
+        information.setWrappingWidth(Window.WIDTH - padding * 2);
+
+        Button back = new Button("Retour");
+        back.setOnAction((event) -> {
+            showMenu();
+        });
+
+        root.getChildren().addAll(title, person1Box, person2Box, information, back);
+        
         if (animationTimer != null) {
             animationTimer.stop();
         }

@@ -42,8 +42,25 @@ public class Player extends GameObject {
         pressedDirection.remove(code);
     }
 
+    public void addHealth() {
+        if (health > 0) {
+            health += 1;
+        }
+    }
+
+    public void loseHealth() {
+        if (health > 0) {
+            health -= 1;
+        }
+    }
+
     public int getHealth() {
         return health;
+    }
+
+    @Override
+    public boolean isDead() {
+        return health <= 0;
     }
 
     @Override

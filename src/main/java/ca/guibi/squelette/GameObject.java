@@ -29,6 +29,8 @@ public abstract class GameObject {
 
     protected Image sprite;
 
+    public abstract boolean isDead();
+
     public abstract void update(double deltaTime);
 
     public void draw(GraphicsContext graphics) {

@@ -25,7 +25,6 @@ public class Game {
     private ArrayList<Magic> magics = new ArrayList<>();
     private ArrayList<Monster> monsters = new ArrayList<>();
 
-    private int health = 3;
     private int level = 1;
     private int score = 0;
 
@@ -57,6 +56,8 @@ public class Game {
     private void levelUp() {
         level += 1;
         deltaTimeLevelText = 0;
+        deltaTimeMonster = 0;
+        deltaTimeSpecialMonster = 0;
     }
 
     private boolean collision(GameObject o1, double r1, GameObject o2, double r2) {
@@ -99,7 +100,7 @@ public class Game {
         for (int i = 0; i < monsters.size(); i++) {
             monsters.get(i).update(deltaTime);
             if (monsters.get(i).isDead()) {
-                health -= 1;
+                player.loseHealth();
                 monsters.remove(i);
                 i--;
             }
@@ -127,17 +128,21 @@ public class Game {
                 (Window.WIDTH - getTextWidth(String.valueOf(score), context.getFont())) / 2, 50);
 
         double healthSize = 30;
-        double offset = Window.WIDTH / 2 - health * (healthSize / 2);
-        for (int i = 0; i < health; i++) {
+        double offset = Window.WIDTH / 2 - player.getHealth() * (healthSize / 2);
+        for (int i = 0; i < player.getHealth(); i++) {
             context.drawImage(healthSprite, 0, 0, healthSprite.getWidth(), healthSprite.getHeight(),
                     offset + i * healthSize,
                     80, healthSize, healthSize);
         }
 
-        if (deltaTimeLevelText < 3) {
+        if (player.isDead()) {
+            context.setFill(Color.RED);
             context.setFont(new Font("Arial", 30));
-            context.fillText("Niveau " + level, (Window.WIDTH - getTextWidth("Niveau " + level, context.getFont())) / 2,
-                    200);
+            context.fillText("FIN DE PARTIE", (Window.WIDTH - getTextWidth("FIN DE PARTIE", context.getFont())) / 2, 200);
+        } else if (deltaTimeLevelText < 3) {
+            context.setFill(Color.WHITE);
+            context.setFont(new Font("Arial", 30));
+            context.fillText("Niveau " + level, (Window.WIDTH - getTextWidth("Niveau " + level, context.getFont())) / 2, 200);
         }
 
         player.draw(context);
@@ -168,7 +173,8 @@ public class Game {
                 score += 1;
                 break;
             case K:
-                health += 1;
+                player.addHealth();
+                ;
                 break;
             case L:
 

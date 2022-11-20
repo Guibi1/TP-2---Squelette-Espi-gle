@@ -38,6 +38,7 @@ public class Magic extends GameObject {
         }
     }
 
+    @Override
     public boolean isDead() {
         return (x + height) < -100;
     }

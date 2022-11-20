@@ -28,6 +28,7 @@ public class Monster extends GameObject {
                 ImageHelpers.couleurAuHasard());
     }
 
+    @Override
     public boolean isDead() {
         return (isGoingRight && x >= Window.WIDTH) || (!isGoingRight && x + width <= 0);
     }

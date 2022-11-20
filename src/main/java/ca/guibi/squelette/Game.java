@@ -71,6 +71,10 @@ public class Game {
     }
 
     public void update(double deltaTime) {
+        if (player.isDead()) {
+            return;
+        }
+
         deltaTimeLevelText += deltaTime;
         deltaTimeMonster += deltaTime;
 
@@ -159,6 +163,10 @@ public class Game {
     }
 
     public void keyPressed(KeyEvent event) {
+        if (player.isDead()) {
+            return;
+        }
+
         switch (event.getCode()) {
             case SPACE:
                 createMagic();

@@ -50,6 +50,10 @@ public class Game {
     }
 
     public void update(double deltaTime) {
+        if (player.getHealth() == 0) {
+            // TODO Show message to play again or to say the level or to say the player's trash
+            return;
+        }
         deltaTimeMonster += deltaTime;
         if (deltaTimeMonster >= 3) {
             deltaTimeMonster -= 3;

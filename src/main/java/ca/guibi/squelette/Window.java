@@ -136,7 +136,7 @@ public class Window extends Application {
         person1.setFill(ImageHelpers.couleurAuHasard());
         person1Box.setSpacing(24);
         person1Box.getChildren().addAll(person1Text, person1);
-        
+
         HBox person2Box = new HBox();
         person2Box.setAlignment(Pos.CENTER);
         Text person2Text = new Text("et");
@@ -147,7 +147,8 @@ public class Window extends Application {
         person2Box.setSpacing(24);
         person2Box.getChildren().addAll(person2Text, person2);
 
-        Text information = new Text("Travail remis à Nicolas Hurtubise. Graphismes adaptés de https://game-icons.net/. Développé dans le cadre du cours 420-203-RE. Développement de programmes dans un environnement graphique, au Collège de Bois-de-Boulogne");
+        Text information = new Text(
+                "Travail remis à Nicolas Hurtubise. Graphismes adaptés de https://game-icons.net/. Développé dans le cadre du cours 420-203-RE. Développement de programmes dans un environnement graphique, au Collège de Bois-de-Boulogne");
         information.setWrappingWidth(Window.WIDTH - padding * 2);
 
         Button back = new Button("Retour");
@@ -156,10 +157,11 @@ public class Window extends Application {
         });
 
         root.getChildren().addAll(title, person1Box, person2Box, information, back);
-        
+
         if (animationTimer != null) {
             animationTimer.stop();
         }
+
         stage.setScene(scene);
     }
 

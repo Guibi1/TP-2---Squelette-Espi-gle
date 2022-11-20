@@ -71,11 +71,9 @@ public class Game {
     }
 
     public void update(double deltaTime) {
-        if (player.getHealth() == 0) {
-            // TODO Show message to play again or to say the level or to say the player's trash
-            return;
-        }
+        deltaTimeLevelText += deltaTime;
         deltaTimeMonster += deltaTime;
+
         if (deltaTimeMonster >= 3) {
             deltaTimeMonster -= 3;
             createMonster();
@@ -140,11 +138,13 @@ public class Game {
         if (player.isDead()) {
             context.setFill(Color.RED);
             context.setFont(new Font("Arial", 30));
-            context.fillText("FIN DE PARTIE", (Window.WIDTH - getTextWidth("FIN DE PARTIE", context.getFont())) / 2, 200);
+            context.fillText("FIN DE PARTIE", (Window.WIDTH - getTextWidth("FIN DE PARTIE", context.getFont())) / 2,
+                    200);
         } else if (deltaTimeLevelText < 3) {
             context.setFill(Color.WHITE);
             context.setFont(new Font("Arial", 30));
-            context.fillText("Niveau " + level, (Window.WIDTH - getTextWidth("Niveau " + level, context.getFont())) / 2, 200);
+            context.fillText("Niveau " + level, (Window.WIDTH - getTextWidth("Niveau " + level, context.getFont())) / 2,
+                    200);
         }
 
         player.draw(context);

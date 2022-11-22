@@ -37,12 +37,12 @@ public class Window extends Application {
         showMenu();
 
         // General
-        primaryStage.setWidth(WIDTH);
-        primaryStage.setHeight(HEIGHT);
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("Squelette Espiègle");
-        primaryStage.getIcons().add(new Image("logo.png"));
-        primaryStage.show();
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
+        stage.setResizable(false);
+        stage.setTitle("Squelette Espiègle");
+        stage.getIcons().add(new Image("logo.png"));
+        stage.show();
     }
 
     void showMenu() {
@@ -52,6 +52,8 @@ public class Window extends Application {
         buttonInfo.setOnAction((event) -> showCredits());
 
         VBox root = new VBox(buttonPlay, buttonInfo);
+        root.setPrefHeight(HEIGHT);
+        root.setPrefWidth(WIDTH);
         root.setBackground(new Background(List.of(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
                 List.of(new BackgroundImage(new Image("logo.png"), BackgroundRepeat.NO_REPEAT,
                         BackgroundRepeat.NO_REPEAT,
@@ -72,6 +74,9 @@ public class Window extends Application {
         }
 
         stage.setScene(scene);
+        stage.sizeToScene();
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
     }
 
     void showGame() {
@@ -111,10 +116,15 @@ public class Window extends Application {
 
         animationTimer.start();
         stage.setScene(scene);
+        stage.sizeToScene();
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
     }
 
     void showCredits() {
         VBox root = new VBox();
+        root.setPrefHeight(HEIGHT);
+        root.setPrefWidth(WIDTH);
         root.setAlignment(Pos.CENTER);
         Scene scene = new Scene(root);
         scene.setOnKeyPressed((event) -> {
@@ -166,6 +176,9 @@ public class Window extends Application {
         }
 
         stage.setScene(scene);
+        stage.sizeToScene();
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
     }
 
     Stage stage;

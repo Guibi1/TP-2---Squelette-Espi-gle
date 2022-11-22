@@ -12,8 +12,11 @@ public class Mouth extends Monster {
 
         vy = 0;
         yBase = y;
-        sprite = new Image("bouche.png");
         time = random.nextDouble(0, 10);
+        sprite = new Image("bouche.png");
+        if (!isGoingRight) {
+            sprite = ImageHelpers.flop(sprite);
+        }
     }
 
     @Override

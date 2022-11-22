@@ -26,6 +26,10 @@ public class Monster extends GameObject {
 
         sprite = ImageHelpers.colorize(new Image("monstres/" + random.nextInt(8) + ".png"),
                 ImageHelpers.couleurAuHasard());
+
+        if (!isGoingRight) {
+            sprite = ImageHelpers.flop(sprite);
+        }
     }
 
     @Override
